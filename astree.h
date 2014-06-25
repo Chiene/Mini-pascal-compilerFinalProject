@@ -24,10 +24,10 @@ extern TYPE *make_type (TYPEKIND k);
 
 extern TYPESUBR  *make_typesubr  (EXPR *lo, EXPR *hi);
 extern TYPEARRAY *make_typearray (TYPE *idx, TYPE *elt);
-
+extern FIELDLIST *make_type_fieldList(IDENT *id,TYPE *elt,FIELDLIST *f);
 
 extern TYPE *make_array_type   (TYPE *idx, TYPE *elt);
-extern TYPE *make_fieldList_type (FIELDLIST *f);
+extern TYPE *make_FieldList_type (FIELDLIST *f);
 extern TYPE *make_bind_type    (BINDING *b);
 extern TYPE *make_id_type      (IDENT *id);
 extern TYPE *make_enum_type    (BINDLIST *bl);
