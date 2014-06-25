@@ -154,7 +154,16 @@ TYPEARRAY *make_typearray (TYPE *idx, TYPE *elt)
   ta->arr_element = elt;
   return ta;
 }
-
+FIELDLIST *make_type_fieldList(IDENT *id,TYPE *elt,FIELDLIST *f)
+{
+  FIELDLIST *fileList=anew (FIELDLIST);
+  FIELD *file=anew (FIELD);
+  file->field_type=elt;
+  file->field_id=id;
+  fileList->this=file;
+  fileList->rest=f;
+  return fileList;
+}
 /* specific TYPE constructors */
 //feature 3
 TYPE *make_array_type(TYPE *idx, TYPE *elt)

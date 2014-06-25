@@ -256,11 +256,11 @@ FieldList
           Hint: You can read FIELD and FIELDLIST which pre-defined in struct.h.
         */
         : ID_ ':' Type OptFieldList
-          { }
+          { $$=make_type_fieldList($1,$3,$4);}
         | ID_ ',' FieldList
-          { }
+          { $$=make_type_fieldList($1,$3->this->field_type,$3);}
         | error
-          { }
+          { $$=0;}
         ;
 
 OptFieldList
