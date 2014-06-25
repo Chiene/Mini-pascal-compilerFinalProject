@@ -137,6 +137,7 @@ TYPE *make_type (TYPEKIND k)
 
 /* TYPE helper constructors */
 
+
 TYPESUBR *make_typesubr (EXPR *lo, EXPR *hi)
 {
   TYPESUBR *s = anew (TYPESUBR);
@@ -155,7 +156,19 @@ TYPEARRAY *make_typearray (TYPE *idx, TYPE *elt)
 }
 
 /* specific TYPE constructors */
-
+//feature 3
+TYPE *make_array_type(TYPE *idx, TYPE *elt)
+{
+  TYPE *t=make_type(TypeArray_);
+  t->t.arr=make_typearray(idx,elt);
+  return t;
+}
+TYPE *make_FieldList_type(FIELDLIST *f)
+{
+  TYPE *t=make_type(TypeRecord_);
+  t->t.rec=f;
+  return t;
+}
 TYPE *make_bind_type (BINDING *b)
 {
   TYPE *t = make_type (TypeIdent_);
