@@ -73,6 +73,15 @@ FORMAL *make_formal (MODEWHICH m, TYPE *t)
   f->frm_addr = 0;
   return f;
 }
+//Feature 5 add function
+PROCFUNCDEF *make_proc(DECLLIST *list,TYPE *t,BLOCK *b)
+{
+  PROCFUNCDEF *proc=anew(PROCFUNCDEF);
+  proc->proc_formals=list;
+  proc->proc_result_type=t;
+  proc-> proc_block=b;
+  return proc;
+}
 
 /* specific DECL constructors */
 //feature2
@@ -84,6 +93,7 @@ DECL *make_var_decl (IDENT *id, TYPE *t)
   return d;
 
 }
+
 
 DECL *make_const_decl (IDENT *id, EXPR *c)
 {
@@ -117,7 +127,21 @@ DECL *make_special_decl (IDENT *id, SPECIALWHICH skind)
   d->d.spc = skind;
   return d;
 }
-
+//
+DECL *make_procedure_decl(IDENT *id,DECLLIST *list,BLOCK *b)
+{
+  DECL *d=make_decl(DeclProcFunc_,id);
+  d->d.proc=make_proc(list,0,b);
+  return d;
+}
+DECL *make_function_decl(IDENT *id,DECLLIST *list,IDENT *type_id,BLOCK *b)
+{
+    DECL *d=make_decl(DeclProcFunc_,id);
+    TYPE *t=make_id_type(type_id);
+    d->d.proc=make_proc(list,t,b);
+  return d;
+}
+//
 /**********************************************************************/
 /*                     General TYPE constructors                      */
 /**********************************************************************/
@@ -244,6 +268,22 @@ STMTWHILE *make_stmtwhile (EXPR *test, STMT *body)
   w->wh_stmt = body;
   return w;
 }
+//Feature6
+STMTLIST *make_stmtList(STMT *s,STMTLIST *_slist)
+{
+  if(s==0)
+  {
+    return _slist;
+  }
+  else
+  {
+    STMTLIST *slist=anew(STMTLIST);
+    slist->this=s;
+    slist->rest=_slist;
+    return slist;
+  }
+
+}
 
 /* specific STMT constructors */
 
@@ -266,6 +306,12 @@ STMT *make_whilestmt (EXPR *test, STMT *body)
   STMT *s = make_stmt (StmtWhile_);
   s->s.wh = make_stmtwhile (test, body);
   return s;	
+}
+STMT *make_compound(STMTLIST *stmtlist)
+{
+  STMT *s = make_stmt (StmtCompound_);
+  s->s.comp=stmtlist;
+  return s;
 }
 
 /**********************************************************************/

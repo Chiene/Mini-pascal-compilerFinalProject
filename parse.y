@@ -280,7 +280,7 @@ ProcedureDeclaration
 	      Implement the make_procfunc_decl function to handle this production.
 	      Hint: You can read PROCFUNCDEF and DECL which pre-defined in struct.h. 
 	    */
-          { }
+          {$$=make_procedure_decl($2,$3,$5);}
         ;
 
 OptFormalParameters
@@ -335,7 +335,7 @@ FunctionDeclaration
           Implement the make_procfunc_decl function to handle this production.
           Hint: You can read PROCFUNCDEF and DECL which pre-defined in struct.h. 
         */
-          { }
+          { $$=make_function_decl($2,$3,$5,$7);}
         ;
 
 Statement
@@ -439,7 +439,7 @@ CompoundStatement
           Feature 6
           Implement the function in astree.c to handle this production.
         */
-          { }
+          {$$=make_compound($2); }
         ;
 
 Statements
@@ -448,13 +448,13 @@ Statements
           Feature 6 (continue)
           Implement the function in astree.c to handle this production.
         */
-          { }
+          { $$=make_stmtList($1,0);}
         | Statement ';' Statements
         /*
           Feature 6 (continue)
           Implement the function in astree.c to handle this production.
         */
-          { }
+          { $$=make_stmtList($1,$3);}
         ;
 
 IfStatement
