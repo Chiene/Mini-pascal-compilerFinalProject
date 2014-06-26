@@ -10,6 +10,8 @@ extern DECL     *make_decl     (DECLKIND k, IDENT *id);
 
 extern VARDEF      *make_vardef (TYPE *t);
 extern FORMAL      *make_formal (MODEWHICH m, TYPE *t);
+extern PROCFUNCDEF *make_proc   (DECLLIST *list,TYPE *t,BLOCK *b);
+
 
 extern DECL   *make_program_decl  (IDENT *id);
 extern DECL   *make_var_decl      (IDENT *id, TYPE *t);
@@ -17,7 +19,8 @@ extern DECL   *make_const_decl    (IDENT *id, EXPR *c);
 extern DECL   *make_type_decl     (IDENT *id, TYPE *t);
 extern DECL   *make_formal_decl   (IDENT *id, MODEWHICH m, TYPE *t);
 extern DECL   *make_special_decl  (IDENT *id, SPECIALWHICH skind);
-
+extern DECL   *make_function_decl (IDENT *id,DECLLIST *list,IDENT *type_id,BLOCK *b);
+extern DECL   *make_procedure_decl(IDENT *id,DECLLIST *list,BLOCK *b);
 /* TYPE routines */
 
 extern TYPE *make_type (TYPEKIND k);
@@ -40,12 +43,13 @@ extern STMT     *make_stmt     (STMTKIND k);
 extern STMTASSIGN *make_stmtassign (EXPR *v, EXPR *e);
 extern STMTWHILE  *make_stmtwhile  (EXPR *test, STMT *body);
 extern STMTCASE   *make_stmtcase   (EXPR *expr, CASELIST *list);
-
+extern STMTLIST   *make_stmtList   (STMT *s,STMTLIST *_slist);
 /* statement constructor functions */
 
 extern STMT *make_assign_stmt  (EXPR *v, EXPR *e);
 extern STMT *make_whilestmt    (EXPR *test, STMT *body);
 extern STMT *make_call_stmt    (EXPR *e);
+extern STMT *make_compound     (STMTLIST *stmtlist);
 
 /* general functions */
 
