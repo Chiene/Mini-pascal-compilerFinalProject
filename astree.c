@@ -268,6 +268,42 @@ STMTWHILE *make_stmtwhile (EXPR *test, STMT *body)
   w->wh_stmt = body;
   return w;
 }
+STMTIF *make_stmtif(EXPR *expr,STMT *then,STMT *el)
+{
+  STMTIF *s=anew(STMTIF);
+  s->if_expr=expr;
+  s->if_then=then;
+  s->if_else=el;
+  return s;
+}
+//Feature 10 for
+STMTFOR *make_stmtFor(IDENT *id,EXPR *init,OBJECT *obj,EXPR *to,STMT *st)
+{
+  STMTFOR *s=anew(STMTFOR);
+  s->for_name=make_binding(id);
+  s->for_init=init;
+  s->for_to=to;
+  s->for_limit_obj=0;
+  s->for_stmt=st;
+  if(obj==0)
+  {
+    s->for_upward=FALSE;
+  }
+  else
+  {
+    s->for_upward=TRUE;
+  }
+  return s;
+}
+
+//Feature 8 case
+STMTCASE *make_stmtCase(EXPR *e,CASELIST *cl)
+{
+  STMTCASE *s=anew(STMTCASE);
+  s->cas_expr=e;
+  s->cas_arms=cl;
+  return s;
+}
 //Feature6
 STMTLIST *make_stmtList(STMT *s,STMTLIST *_slist)
 {
@@ -284,7 +320,31 @@ STMTLIST *make_stmtList(STMT *s,STMTLIST *_slist)
   }
 
 }
+//Feature 9
+STMTREPEAT *make_stmtRepeat(EXPR *e,STMTLIST *stmls)
+{
+  STMTREPEAT *s=anew(STMTREPEAT);
+  s->rpt_expr=e;
+  s->rpt_stmts=stmls;
+  return s;
+}
+//Feature 8
 
+CASELIST *make_caseList(CASEARM *cas,CASELIST *cl)
+{
+  CASELIST *calist=anew(CASELIST);
+  calist->this=cas;
+  calist->rest=cl;
+  return calist;
+}
+CASEARM *make_caseArm(EXPRLIST *e,STMT *stmt)
+{
+  CASEARM *ca=anew(CASEARM);
+  ca->arm_labels=e;
+  ca->arm_stmt=stmt;
+  return ca;
+}
+//
 /* specific STMT constructors */
 
 STMT *make_assign_stmt (EXPR *v, EXPR *e)
@@ -311,6 +371,33 @@ STMT *make_compound(STMTLIST *stmtlist)
 {
   STMT *s = make_stmt (StmtCompound_);
   s->s.comp=stmtlist;
+  return s;
+}
+STMT *make_ifStmt(EXPR *e ,STMT *stmt, STMT *el)
+{
+  STMT *s=make_stmt(StmtIf_);
+  s->s.ifx=make_stmtif(e,stmt,el);
+  return s;
+}
+//Feature 8
+STMT *make_caseStmt(EXPR *e,CASELIST *cl)
+{
+  STMT *s=make_stmt(StmtCase_);
+  s->s.cas=make_stmtCase(e,cl);
+  return s;
+}
+//Feature 9
+STMT *make_repeateStmt(EXPR *e,STMTLIST *sl)
+{
+  STMT *s=make_stmt(StmtRepeat_);
+  s->s.rpt=make_stmtRepeat(e,sl);
+  return s;
+}
+//Feature 10
+STMT *make_forStmt(IDENT *id,EXPR *init,OBJECT *obj,EXPR *to,STMT *st)
+{
+  STMT *s=make_stmt(StmtFor_);
+  s->s.forx=make_stmtFor(id,init,obj,to,st);
   return s;
 }
 

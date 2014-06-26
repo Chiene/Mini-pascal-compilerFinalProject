@@ -463,7 +463,7 @@ IfStatement
           Feature 7
           Implement the function in astree.c to handle this production.
         */
-          { }
+          {$$=make_ifStmt($2,$4,$5); }
         ;
 
 OptElse
@@ -480,7 +480,7 @@ CaseStatement
           Fill the following rule action and implement the function if you need
           in astree.c to handle this production.
         */
-          { }
+          { $$=make_caseStmt($2,$4);}
         ;
 
 CaseListElements
@@ -490,7 +490,7 @@ CaseListElements
           Fill the following rule action and implement the function in astree.c 
           if you need.
         */
-          { } 
+          {$$=make_caseList($1,$2); } 
         ;
 
 OptCaseListElements
@@ -500,11 +500,11 @@ OptCaseListElements
           if you need.
         */
         :
-          { }
+          { $$=0;}
         | ';'
-          { }
+          { $$=0;}
         | ';' CaseListElements
-          { }
+          { $$=$2;}
         ;
 
 CaseListElement
@@ -514,9 +514,9 @@ CaseListElement
           if you need.
         */
         : CaseLabelList ':' Statement
-          { }
+          {$$=make_caseArm($1,$3); }
         | error
-          { }
+          {$$=0; }
         ;
 
 CaseLabelList
@@ -538,7 +538,7 @@ RepeatStatement
           Fill the following rule action and implement the function in astree.c 
           if you need.
         */
-         { }
+         { $$=make_repeateStmt($4,$2);}
         ;
 
 ForStatement
@@ -549,7 +549,7 @@ ForStatement
           Fill the following rule action and implement the function in astree.c 
           if you need.
         */
-         { }
+         {$$=make_forStmt($2,$4,$5,$6,$8); }
         ;
 
 Direction

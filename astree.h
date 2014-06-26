@@ -44,13 +44,22 @@ extern STMTASSIGN *make_stmtassign (EXPR *v, EXPR *e);
 extern STMTWHILE  *make_stmtwhile  (EXPR *test, STMT *body);
 extern STMTCASE   *make_stmtcase   (EXPR *expr, CASELIST *list);
 extern STMTLIST   *make_stmtList   (STMT *s,STMTLIST *_slist);
+extern STMTIF     *make_stmtif     (EXPR *expr,STMT *then,STMT *el);
+extern STMTREPEAT *make_stmtRepeat (EXPR *e,STMTLIST *stmls);
+extern STMTFOR    *make_stmtFor    (IDENT *id,EXPR *init,OBJECT *obj,EXPR *to,STMT *st);
+extern CASELIST   *make_caseList   (CASEARM *cas,CASELIST *cl);
+extern CASEARM    *make_caseArm    (EXPRLIST *e,STMT *stmt);
+
 /* statement constructor functions */
 
 extern STMT *make_assign_stmt  (EXPR *v, EXPR *e);
 extern STMT *make_whilestmt    (EXPR *test, STMT *body);
 extern STMT *make_call_stmt    (EXPR *e);
 extern STMT *make_compound     (STMTLIST *stmtlist);
-
+extern STMT *make_ifStmt       (EXPR *e ,STMT *stmt, STMT *el);
+extern STMT *make_caseStmt     (EXPR *e,CASELIST *cl);
+extern STMT *make_repeateStmt  (EXPR *e,STMTLIST *sl);
+extern STMT *make_forStmt      (IDENT *id,EXPR *init,OBJECT *obj,EXPR *to,STMT *st);
 /* general functions */
 
 extern EXPR     *make_expr     (EXPRKIND k);
